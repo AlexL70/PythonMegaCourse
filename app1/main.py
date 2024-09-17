@@ -8,7 +8,7 @@ while True:
             todos.append(todo)
         case "show" | "display":
             for i, item in enumerate(todos):
-                print(i, '-', item)
+                print(f"{i+1}. — {item}")
         case "edit":
             strNum = input("Number of the todo to edit: ")
             if not strNum.isnumeric():
