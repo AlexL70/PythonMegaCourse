@@ -1,4 +1,4 @@
-user_prompt = "Type add, edit, show or exit: "
+user_prompt = "Type add, edit, show, complete or exit: "
 todos = []
 while True:
     userAction = input(user_prompt)
@@ -21,6 +21,17 @@ while True:
             print("You are editing", todos[num])
             newTodo = input("Enter a new value for the todo: ").strip()
             todos[num] = newTodo
+        case "complete":
+            strNum = input("Number of the todo to complete (delete): ")
+            if not strNum.isnumeric():
+                print("Not an integer number:", strNum)
+                continue
+            num = int(strNum) - 1
+            if num < 0 or num >= len(todos):
+                print("The number you entered is out of range!")
+                continue
+            deleted = todos.pop(num)
+            print(f"'{deleted}' todo has been deleted.")
         case "exit":
             break
         case _unknown:
