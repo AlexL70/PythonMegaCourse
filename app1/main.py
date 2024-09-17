@@ -1,17 +1,14 @@
-from PIL.ImImagePlugin import number
-
 user_prompt = "Type add, edit, show or exit: "
 todos = []
 while True:
     userAction = input(user_prompt)
     match userAction.strip():
         case "add":
-            todo = input("Enter a todo: ")
+            todo = input("Enter a todo: ").strip()
             todos.append(todo)
         case "show" | "display":
-            for item in todos:
-                item = item
-                print(item)
+            for i, item in enumerate(todos):
+                print(i, '-', item)
         case "edit":
             strNum = input("Number of the todo to edit: ")
             if not strNum.isnumeric():
@@ -22,7 +19,7 @@ while True:
                 print("The number you entered is out of range!")
                 continue
             print("You are editing", todos[num])
-            newTodo = input("Enter a new value for the todo: ")
+            newTodo = input("Enter a new value for the todo: ").strip()
             todos[num] = newTodo
         case "exit":
             break
