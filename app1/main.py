@@ -13,8 +13,14 @@ while True:
                 item = item
                 print(item)
         case "edit":
-            num = int(input("Number of the todo to edit: "))
-            num -= 1
+            strNum = input("Number of the todo to edit: ")
+            if not strNum.isnumeric():
+                print("Not an integer number:", strNum)
+                continue
+            num = int(strNum) - 1
+            if num < 0 or num >= len(todos):
+                print("The number you entered is out of range!")
+                continue
             print("You are editing", todos[num])
             newTodo = input("Enter a new value for the todo: ")
             todos[num] = newTodo
