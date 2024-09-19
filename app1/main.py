@@ -2,18 +2,19 @@ user_prompt = "Type add, edit, show, complete or exit: "
 file = open("todos.txt", "r")
 todos = file.readlines()
 file.close()
+todos = [todo.strip('\n') for todo in todos] # remove linebreaks from todos
 while True:
     userAction = input(user_prompt)
     match userAction.strip():
         case "add":
             todo = input("Enter a todo: ").strip()
-            todos.append(f"{todo}\n")
+            todos.append(f"{todo}")
             file = open("todos.txt", 'w')
-            file.writelines(todos)
+            file.writelines([f"{todo}\n" for todo in todos])
             file.close()
         case "show":
             for i, item in enumerate(todos):
-                print(f"{i+1}. — {item}", end='')
+                print(f"{i+1}. — {item}")
         case "edit":
             strNum = input("Number of the todo to edit: ")
             if not strNum.isnumeric():
@@ -23,11 +24,11 @@ while True:
             if num < 0 or num >= len(todos):
                 print("The number you entered is out of range!")
                 continue
-            print("You are editing", todos[num])
+            print(f"You are editing \"{todos[num]}\"")
             newTodo = input("Enter a new value for the todo: ").strip()
             todos[num] = newTodo
             file = open("todos.txt", 'w')
-            file.writelines(todos)
+            file.writelines([f"{todo}\n" for todo in todos])
             file.close()
         case "complete":
             strNum = input("Number of the todo to complete (delete): ")
@@ -39,9 +40,9 @@ while True:
                 print("The number you entered is out of range!")
                 continue
             deleted = todos.pop(num)
-            print(f"'{deleted}' todo has been deleted.")
+            print(f"\"{deleted}\" todo has been deleted.")
             file = open("todos.txt", 'w')
-            file.writelines(todos)
+            file.writelines([f"{todo}\n" for todo in todos])
             file.close()
         case "exit":
             break
