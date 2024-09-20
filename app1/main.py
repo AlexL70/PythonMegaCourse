@@ -13,32 +13,28 @@ while True:
         for i, item in enumerate(todos):
             print(f"{i+1}. — {item}")
     elif userAction.startswith("edit"):
-        strNum = userAction[4:].strip()
-        if not strNum.isnumeric():
-            print("Not an integer number:", strNum)
+        try:
+            strNum = userAction[4:].strip()
+            num = int(strNum) - 1
+            print(f"You are editing \"{todos[num]}\"")
+            newTodo = input("Enter a new value for the todo: ").strip()
+            todos[num] = newTodo
+            with open("todos.txt", 'w') as file:
+                file.writelines([f"{todo}\n" for todo in todos])
+        except (ValueError, IndexError):
+            print("Bad command. After \"edit\" you should enter non-negative number from the list.")
             continue
-        num = int(strNum) - 1
-        if num < 0 or num >= len(todos):
-            print("The number you entered is out of range!")
-            continue
-        print(f"You are editing \"{todos[num]}\"")
-        newTodo = input("Enter a new value for the todo: ").strip()
-        todos[num] = newTodo
-        with open("todos.txt", 'w') as file:
-            file.writelines([f"{todo}\n" for todo in todos])
     elif userAction.startswith("complete"):
-        strNum = userAction[8:].strip()
-        if not strNum.isnumeric():
-            print("Not an integer number:", strNum)
+        try:
+            strNum = userAction[8:].strip()
+            num = int(strNum) - 1
+            deleted = todos.pop(num)
+            print(f"\"{deleted}\" todo has been deleted.")
+            with open("todos.txt", 'w') as file:
+                file.writelines([f"{todo}\n" for todo in todos])
+        except (ValueError, IndexError):
+            print("Bad command. After \"complete\" you should enter non-negative number from the list.")
             continue
-        num = int(strNum) - 1
-        if num < 0 or num >= len(todos):
-            print("The number you entered is out of range!")
-            continue
-        deleted = todos.pop(num)
-        print(f"\"{deleted}\" todo has been deleted.")
-        with open("todos.txt", 'w') as file:
-            file.writelines([f"{todo}\n" for todo in todos])
     elif userAction == "exit":
         break
     else:
