@@ -1,10 +1,10 @@
-user_prompt = "Type add <todo>, edit <number>, show, complete <number> or exit: "
+user_prompt = "Type add/new <todo>, edit <number>, show, complete <number> or exit: "
 with open("todos.txt", "r") as file:
     todos = file.readlines()
 todos = [todo.strip('\n') for todo in todos] # remove linebreaks from todos
 while True:
     userAction = input(user_prompt).strip()
-    if userAction.startswith( "add"):
+    if userAction.startswith( "add") or userAction.startswith("new"):
         todo = userAction[3:].strip()
         todos.append(f"{todo}")
         with open("todos.txt", 'w') as file:
