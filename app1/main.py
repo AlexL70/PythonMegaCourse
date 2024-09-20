@@ -1,4 +1,4 @@
-user_prompt = "Type add, edit, show, complete or exit: "
+user_prompt = "Type add <todo>, edit <number>, show, complete <number> or exit: "
 with open("todos.txt", "r") as file:
     todos = file.readlines()
 todos = [todo.strip('\n') for todo in todos] # remove linebreaks from todos
@@ -12,8 +12,8 @@ while True:
     elif userAction == "show":
         for i, item in enumerate(todos):
             print(f"{i+1}. — {item}")
-    elif userAction == "edit":
-        strNum = input("Number of the todo to edit: ")
+    elif userAction.startswith("edit"):
+        strNum = userAction[4:].strip()
         if not strNum.isnumeric():
             print("Not an integer number:", strNum)
             continue
@@ -26,8 +26,8 @@ while True:
         todos[num] = newTodo
         with open("todos.txt", 'w') as file:
             file.writelines([f"{todo}\n" for todo in todos])
-    elif userAction == "complete":
-        strNum = input("Number of the todo to complete (delete): ")
+    elif userAction.startswith("complete"):
+        strNum = userAction[8:].strip()
         if not strNum.isnumeric():
             print("Not an integer number:", strNum)
             continue
