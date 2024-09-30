@@ -1,15 +1,19 @@
 FILE_PATH = 'todos.txt'
 
 def get_todos(filePath=FILE_PATH) -> list[str]:
+    """ Reads todo list from the file. Returns todo list """
     with open(filePath, "r") as file:
         todo_list = file.readlines()
     return [todo_el.strip('\n') for todo_el in todo_list] # remove linebreaks from todos
 
 
 def write_todos(todo_list: list[str], filePath=FILE_PATH):
+    """ Saves todo list passed in param:todo_list parameter to the file """
     with open(filePath, 'w') as file:
         file.writelines([f"{todo_el}\n" for todo_el in todo_list])
 
+# print(help(get_todos))
+# print(help(write_todos))
 
 user_prompt = "Type add/new <todo>, edit <number>, show, complete <number> or exit: "
 todos = get_todos()
