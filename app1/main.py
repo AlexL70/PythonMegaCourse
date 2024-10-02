@@ -1,6 +1,8 @@
 # from functions import get_todos, write_todos
 from modules import functions as fn
+import time
 
+print(f"It is {time.strftime('%b %d, %Y %H:%M:%S')}")
 user_prompt = "Type add/new <todo>, edit <number>, show, complete <number> or exit: "
 todos = fn.get_todos()
 while True:
