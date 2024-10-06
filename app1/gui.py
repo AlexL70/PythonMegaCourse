@@ -1,28 +1,49 @@
 import modules.functions as fn
 import FreeSimpleGUI as sg
 
-
 """
 Keys used to identify controls
 """
-TODO_INPUT: str="todo_input"
-ADD_BTN: str="add_btn"
+class ControlKeys:
+    TODO_INPUT: str="__todo_input__"
+    TODO_LST: str="__todo_lst__"
+    ADD_BTN: str="__add_btn__"
+    EDIT_BTN: str="__edit_bnt__"
+
+# Read todo list from the file
+todos = fn.get_todos()
 
 label = sg.Text("Type in a to-do:")
-input_box = sg.InputText(tooltip="Please enter a to-do", key=TODO_INPUT)
-add_button = sg.Button("Add", key=ADD_BTN)
+input_box = sg.InputText(tooltip="Please enter a to-do", key=ControlKeys.TODO_INPUT)
+add_button = sg.Button("Add", key=ControlKeys.ADD_BTN)
+edit_button = sg.Button("Edit", key=ControlKeys.EDIT_BTN)
+todo_list = sg.Listbox(values=todos, key=ControlKeys.TODO_LST, select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, bind_return_key=True, auto_size_text=True, enable_events=True, size=(40,10))
 wnd = sg.Window('My To-Do App',
-                layout=[[label],[input_box, add_button]],
+                layout=[[label],
+                        [input_box, add_button],
+                        [todo_list, edit_button]],
                 font=('Helvetica', 18))
 
-todos = fn.get_todos()
 while True:
     event, values = wnd.read()
+    print(event)
+    print(values)
     match event:
-       case sg.WIN_CLOSED:
-           break
-       case ADD_BTN:
-           todos.append(values[TODO_INPUT])
-           fn.write_todos(todos)
+        case ControlKeys.ADD_BTN:
+            todos.append(values[ControlKeys.TODO_INPUT])
+            fn.write_todos(todos)
+            wnd[ControlKeys.TODO_LST].update(values=todos)
+        case ControlKeys.EDIT_BTN:
+            list_item = values[ControlKeys.TODO_LST][0]
+            edit_line = values[ControlKeys.TODO_INPUT]
+            index = todos.index(list_item)
+            todos[index] = edit_line
+            fn.write_todos(todos)
+            wnd[ControlKeys.TODO_LST].update(values=todos)
+        case ControlKeys.TODO_LST:
+            list_item = values[ControlKeys.TODO_LST][0]
+            wnd[ControlKeys.TODO_INPUT].update(value=list_item)
+        case sg.WIN_CLOSED:
+            break
 
 wnd.close()
