@@ -32,10 +32,13 @@ while True:
         case sg.WIN_CLOSED:
             break
         case ControlKeys.CONVERT_BTN:
-            feet = float(values[ControlKeys.FEET_INP])
-            inches = float(values[ControlKeys.INCHES_INP])
-            result = feet * 0.3048 + inches * 0.0254
-            wnd[ControlKeys.RESULT_LBL].update(value=str(result))
+            try:
+                feet = float(values[ControlKeys.FEET_INP])
+                inches = float(values[ControlKeys.INCHES_INP])
+                result = feet * 0.3048 + inches * 0.0254
+                wnd[ControlKeys.RESULT_LBL].update(value=str(result))
+            except ValueError:
+                sg.popup("Please provide two numbers (feets and inches)!", title="Bad input!", font=('Helvetica', 20))
         case ControlKeys.EXIT_BTN:
             break
 wnd.close()
