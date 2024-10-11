@@ -1,6 +1,12 @@
 import modules.functions as fn
 import FreeSimpleGUI as sg
 import time
+import os
+
+# Check if file exists and create one if it does not
+if not os.path.exists(fn.FILE_PATH):
+    with open(fn.FILE_PATH, "w") as file:
+        pass
 
 sg.theme("DarkTeal10")
 
