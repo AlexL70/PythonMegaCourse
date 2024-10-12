@@ -46,9 +46,10 @@ def edit_mode():
             break
 
 
+st.set_page_config(layout="wide")
 st.title("My Todo App")
 st.subheader("This is my todo app.")
-st.text("This app is to increase you productivity.")
+st.write("<h6>This app is to increase you <b>productivity</b>.</h6>", unsafe_allow_html=True)
 
 col1, col2 = st.columns((4,1))
 
