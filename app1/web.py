@@ -14,6 +14,15 @@ def add_todo():
     item = st.session_state[ControlKeys.TODO_INPUT]
     todos.append(item)
     fn.write_todos(todos)
+    st.session_state[ControlKeys.TODO_INPUT] = None
+
+def complete_todo():
+    for i, item in enumerate(todos):
+        completed = st.session_state[f"{ControlKeys.COMPLETE_BTN}{i}"]
+        if completed:
+            todos.pop(i)
+            fn.write_todos(todos)
+            break
 
 st.title("My Todo App")
 st.subheader("This is my todo app.")
@@ -29,9 +38,9 @@ for index, todo in enumerate(todos):
         with row[1]:
             st.button("Edit", key=f"{ControlKeys.EDIT_BTN}{index}", use_container_width=True)
         with row[2]:
-            st.button("Complete", key=f"{ControlKeys.COMPLETE_BTN}{index}", use_container_width=True)
+            st.button("Complete", key=f"{ControlKeys.COMPLETE_BTN}{index}", use_container_width=True, on_click=complete_todo)
 
 
 st.text_input(label="Enter a todo to be added:", placeholder="New todo", on_change=add_todo, key=ControlKeys.TODO_INPUT)
 
-print(st.session_state)
+# print(st.session_state)
