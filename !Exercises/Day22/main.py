@@ -4,7 +4,7 @@ Day 22: Student Project: Create a Company Website
 import streamlit as st
 import pandas as pnd
 
-df = pnd.read_csv("data.csv", sep=',')
+df = pnd.read_csv("data.csv")
 
 st.set_page_config(layout="wide")
 st.title("The best company")
@@ -14,7 +14,7 @@ st.write(description)
 st.write("<h2>Our team</h2>", unsafe_allow_html=True)
 
 col_len = int(len(df.index) / 3)
-col1, space1, col2, space2, col3 = st.columns([8,1,8,1,8])
+col1, col2, col3 = st.columns(3)
 
 with col1:
     for index, row in df[:col_len].iterrows():
