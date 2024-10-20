@@ -10,7 +10,7 @@ def home():
 def dictionary(word: str):
     return {
         'word': word,
-        'description': word.capitalize()
+        'definition': word.upper()
     }
 
 if __name__ == '__main__':
