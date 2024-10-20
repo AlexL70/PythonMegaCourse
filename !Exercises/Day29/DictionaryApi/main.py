@@ -1,7 +1,8 @@
 from flask import Flask, render_template
-import requests as rq
+import pandas as pd
 
 app = Flask(__name__)
+df = pd.read_csv("data/dictionary.csv")
 
 
 @app.route('/')
@@ -11,17 +12,10 @@ def home():
 
 @app.route('/api/v1/<word>')
 def dictionary(word: str):
-    url = f"https://api.dictionaryapi.dev/api/v2/entries/en/{word}"
     result = {"definition": None, "word": word}
-    response = rq.get(url)
-    if response.status_code != 200:
-        return result
-    content = response.json()
-    definitions = content[0]["meanings"][0]["definitions"]
-    whole_def = ""
-    for index, definition in enumerate(definitions):
-        whole_def += f"{(index + 1)}. {definition['definition']}\n "
-    result["definition"] = whole_def
+    definition = df[df["word"] == word]["definition"].squeeze()
+    if type(definition) == str and len(definition) > 0:
+        result["definition"] = definition
     return result
 
 
