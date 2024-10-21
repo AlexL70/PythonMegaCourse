@@ -32,7 +32,8 @@ x_axis = st.selectbox("Select the data for the x-axis", options=DATA_TYPES)
 y_types = [dt for dt in DATA_TYPES if dt != x_axis]
 y_axis = st.selectbox("Select the data for the y-axis", options=y_types)
 
-data = df[[dt_to_col[x_axis], dt_to_col[y_axis]]]
-figure = px.scatter(x=data[dt_to_col[x_axis]], y=data[dt_to_col[y_axis]], labels={"x": x_axis, "y": y_axis})
+x_data = df[dt_to_col[x_axis]]
+y_data = df[dt_to_col[y_axis]]
+figure = px.scatter(x=x_data, y=y_data, labels={"x": x_axis, "y": y_axis})
 st.plotly_chart(figure)
 
