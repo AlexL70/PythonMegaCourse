@@ -31,6 +31,7 @@ st.title("In Search for Happiness")
 x_axis = st.selectbox("Select the data for the x-axis", options=DATA_TYPES)
 y_types = [dt for dt in DATA_TYPES if dt != x_axis]
 y_axis = st.selectbox("Select the data for the y-axis", options=y_types)
+st.subheader(f"Scatter plot of {x_axis} vs {y_axis}")
 
 x_data = df[dt_to_col[x_axis]]
 y_data = df[dt_to_col[y_axis]]
