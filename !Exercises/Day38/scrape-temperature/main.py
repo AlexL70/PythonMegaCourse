@@ -2,10 +2,10 @@ import datetime as dt
 import os
 import requests as req
 import selectorlib as sl
+from file_path import FILE_PATH
 
 
 URL = "https://programmer100.pythonanywhere.com/"
-FILE_PATH = "data/temperature.txt"
 
 
 def get_data(url: str) -> str:
