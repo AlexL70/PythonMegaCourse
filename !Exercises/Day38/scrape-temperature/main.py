@@ -2,6 +2,7 @@ import datetime as dt
 import os
 import requests as req
 import selectorlib as sl
+import sqlite3 as sql
 from file_path import FILE_PATH
 
 
@@ -14,13 +15,14 @@ def get_data(url: str) -> str:
 
 
 def save_temperature(temperature: int) -> None:
-    exsts = os.path.exists(FILE_PATH)
-    if not exsts:
-        with open(FILE_PATH, "w") as file:
-            file.write("date,temperature\n")
-    with open(FILE_PATH, "a") as file:
-        date_str = dt.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
-        file.write(f"{date_str},{temperature}\n")
+    connection = sql.connect("./data/temperature.db")
+    cursor = connection.cursor()
+    cursor.execute(
+        "CREATE TABLE IF NOT EXISTS temperature (date TEXT, temperature INTEGER)")
+    date_str = dt.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
+    cursor.execute("INSERT INTO temperature VALUES (?, ?)",
+                   (date_str, temperature))
+    connection.commit()
 
 
 source = get_data(URL)
