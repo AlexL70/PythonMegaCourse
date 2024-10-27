@@ -8,7 +8,8 @@ from datetime import datetime
 connection = sql.connect("./data/temperature.db")
 cursor = connection.cursor()
 try:
-    data = cursor.execute("SELECT * FROM temperature").fetchall()
+    data = cursor.execute(
+        "SELECT date, temperature FROM temperature").fetchall()
 except sql.OperationalError:
     data = []
 if data and len(data) > 0:
