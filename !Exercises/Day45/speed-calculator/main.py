@@ -47,9 +47,9 @@ class AvgSpeedCalculator(QWidget):
         distance = float(self.distance_edit.value())
         time = float(self.time_edit.value())
         speed = distance / time
-        metrics = 'km/h' if self.measurement_system_combo.currentText() == MeasureSystem.METRIC.value else 'mi/h'
+        units = 'km/h' if self.measurement_system_combo.currentText() == MeasureSystem.METRIC.value else 'mph'
         self.speed_label.setText(
-            f'Average speed: {speed:.2f} {metrics}')
+            f'Average speed: {speed:.4f} {units}')
 
 
 app = QApplication(sys.argv)
